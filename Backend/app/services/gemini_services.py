@@ -3,7 +3,7 @@ from google.genai import types
 
 
 class Gemini_Services:
-    def __init__(self, gemini_api_key, response_schema, embed_model, model_name = "gemini-3-flash-preview"):
+    def __init__(self, gemini_api_key, response_schema, embed_model = "text-embedding-004", model_name = "gemini-3-flash-preview"):
         self.GEMINI_API_KEY = gemini_api_key
         self.model_name = model_name
         self.embed_model = embed_model
@@ -12,9 +12,9 @@ class Gemini_Services:
         self.response_schema = response_schema
 
     
-    def ask_gemini(self, user_querry: str):
+    def ask_gemini(self, user_query: str):
         response = self.client.models.generate_content(model = self.model_name,
-                                                       contents=user_querry,
+                                                       contents=user_query,
                                                        config={
                                                            "response_mime_type": "application/json",
                                                            "response_schema": self.response_schema
