@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: '/chatui',
+      initialRoute: '/chat',
       routes: {
         '/':(context) => const LoadingScreen(),
-        '/chatui':(context) => ChatUI()
+        '/chat':(context) => ChatUI()
       },
     );
   }
