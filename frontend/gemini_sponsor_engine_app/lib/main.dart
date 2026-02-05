@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gemini_sponsor_engine_app/screens/chat.dart';
 import 'package:gemini_sponsor_engine_app/screens/loading.dart';
-import 'package:gemini_sponsor_engine_app/screens/modern_chart.dart';
 
 void main(){
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/chat',
       routes: {
         '/':(context) => const LoadingScreen(),
-        '/chat':(context) => Chat(),
+        '/chat':(context) => ModernChat(),
       },
     );
   }
