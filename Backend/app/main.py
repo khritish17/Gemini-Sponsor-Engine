@@ -1,7 +1,9 @@
 from core.config import settings
 from services.gemini_services import Gemini_Services
 from schemas.gemini_response_schema import Gemini_Response
+from schemas.user_request import User_Request
 from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import sys
 
@@ -39,16 +41,26 @@ async def retirve_ad(math_vector):
 
 
 app = FastAPI(lifespan= lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Allows all domains
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 @app.get("/")
 async def home():
     return {"message": "Welcome to GSE app"}
 
 @app.post("/ask_gemini")
-async def ask_gemini(user_query: str, request: Request):
+async def ask_gemini(data: User_Request, request: Request):
+    user_query = data.user_query
     gemini_services = request.app.state.gemini_services
     gemini_response = gemini_services.ask_gemini(user_query=user_query)
     if gemini_response.is_search_query == True:
         math_vector = gemini_services.get_embeding(gemini_response.cleaned_query)
-    return gemini_response.response
+    response = {"response": gemini_response.response}
+    return response
 
 

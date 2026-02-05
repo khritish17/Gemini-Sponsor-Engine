@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+class ApiApplication {
+  static const String baseURL = "http://127.0.0.1:8000";
+}
 
 class SizesApplication {
   static double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;

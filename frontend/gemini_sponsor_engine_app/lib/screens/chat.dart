@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gemini_sponsor_engine_app/core/constants.dart';
+import 'package:gemini_sponsor_engine_app/services/serverAPI.dart';
 import 'package:gemini_sponsor_engine_app/widgets/messageBar.dart';
 import 'package:gemini_sponsor_engine_app/widgets/messageListBuilder.dart';
 
@@ -18,16 +19,27 @@ class _ModernChatState extends State<ModernChat> {
 
   final TextEditingController _controller = TextEditingController();
 
-  void _sendMessage(){
-    if(_controller.text.isEmpty) return;
+  void _sendMessage() async{
+    String text = _controller.text;
+    if(text.isEmpty) return;
     setState(() {
       _message.add({
-        "message":_controller.text,
+        "message":text,
         "isGemini": false
       });
     });
     _controller.clear();
     // TODO: Call gemini API service
+    String? result = await ApiService.sendMessage(text);
+
+    setState(() {
+      if (result != null){
+        _message.add({"message":result, "isGemini": true});
+      }
+      else{
+        _message.add({"message":"Sorry, something went wrong!", "isGemini": true});
+      }
+    });
   }
 
   @override
